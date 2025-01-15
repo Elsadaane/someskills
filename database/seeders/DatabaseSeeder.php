@@ -11,6 +11,7 @@ use Database\Seeders\AboutSeeder;
 use App\Models\Post;
 use App\Models\Posts_category;
 use App\Models\Product;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,13 +35,16 @@ class DatabaseSeeder extends Seeder
         Category_Product::factory()->count(10)->create();
         Product::factory()->count(10)->create();
         Posts_category::factory()->count(10)->create();
-        Post::factory()->count(10)->create();
         $this->call([
             UserSeeder::class,
             SettingSeeder::class,
             Contact_UsSeeder::class,
             AboutSeeder::class,
             CatogrySeeder::class,
-            HeroSeeder::class]);
+            HeroSeeder::class,
+            writer::class
+
+        ]);
+        Post::factory()->count(10)->create();
     }
 }

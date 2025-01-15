@@ -163,6 +163,53 @@
         </div>
 
     </div><!-- end col -->
+    <div class="row">
+        @foreach ($post_writer as $writer)
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dropdown float-end">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+
+                                {{-- // يدخلك علي يروفايل الكاتب --}}
+                                <a href="{{ route('WriterPosts.profile', $writer->id) }}" class="dropdown-item">
+                                    {{ __('back.view_posts') }}
+                                </a>
+                            </div>
+                        </div>
+
+                        <h4 class="header-title mt-0 mb-4">{{ $writer->name }}</h4>
+
+                        <div class="widget-chart-1">
+                            <div class="widget-chart-box-1 float-start" dir="ltr">
+                                <div style="display:inline;width:70px;height:70px;">
+                                    <canvas width="87" height="87"
+                                        style="width: 70px; height: 70px;"></canvas>
+                                    <input data-plugin="knob" data-width="70" data-height="70"
+                                        data-fgcolor="#6c757d" data-bgcolor="#d6d6d6"
+                                        value="{{ $writer->posts_count }}" data-skin="tron" data-angleoffset="180"
+                                        data-readonly="true" data-thickness=".15" readonly="readonly"
+                                        style="width: 39px; height: 23px; position: absolute; vertical-align: middle;
+                                        margin-top: 23px; margin-left: -54px; border: 0px; background: none; font: bold 14px Arial;
+                                        text-align: center; color: rgb(108, 117, 125); padding: 0px; appearance: none;">
+                                </div>
+                            </div>
+
+                            <div class="widget-detail-1 text-end">
+                                <h2 class="fw-normal pt-2 mb-1"> {{ $writer->posts_writer->count() }} </h2>
+                                <p class="text-muted mb-1">{{ __('back.total_posts') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
 
 </div>
 @endsection

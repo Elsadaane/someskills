@@ -92,6 +92,16 @@
                                 </span>
                             @enderror
                         </div>
+                        <div class="mb-3">
+
+                            <label for="tags">Tags:</label>
+                            <select name="tags[]" id="tags" multiple="multiple" style="width: 100%;">
+                                @foreach ($tags as $tag)
+                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
 
                         <!-- Submit Button -->
                         <div class="form-group text-center mt-4">
@@ -105,3 +115,12 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tags').select2();
+        });
+    </script>
+@endpush

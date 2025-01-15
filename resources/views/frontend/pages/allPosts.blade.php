@@ -51,7 +51,11 @@
                                                     </li>
                                                     <li class="d-flex align-items-center">
                                                         <i class="bi bi-chat-dots"></i>
-                                                        <a href="#">{{ $post->comments_count }} Comments</a>
+                                                        <a
+                                                            href="{{ $post->writer ? route('WriterPosts.profile', $post->writer->id) : '#' }}">
+                                                            {{ $post->writer->name ?? 'admin' }} writer
+                                                        </a>
+
                                                     </li>
                                                 </ul>
                                             </div>

@@ -21,6 +21,7 @@
                             <a href="{{ route('setting.index') }}" class="dropdown-item">{{ __('back.setting') }}</a>
                             <a href="{{ route('About.index') }}" class="dropdown-item">{{ __('back.about_us') }}</a>
                             <a href="{{ route('hero.index') }}" class="dropdown-item">{{ __('back.hero') }}</a>
+                            <a href="{{ route('tag.add') }}" class="dropdown-item">hashtag</a>
                             <a href="{{ route('Contact_us.index') }}"
                                 class="dropdown-item">{{ __('back.contact_us') }}</a>
                         </div>

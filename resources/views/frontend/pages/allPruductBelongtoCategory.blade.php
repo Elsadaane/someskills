@@ -129,7 +129,8 @@
                             <h3 class="widget-title">@lang('front.Recent Products')</h3>
                             @foreach ($recentProducts as $recent)
                                 <div class="product-item">
-                                    <img src="{{ asset($recent->image) }}" alt="" class="flex-shrink-0">
+                                    <img src="{{ asset($recent->image) }}" width="50px" height="50px" alt=""
+                                        class="flex-shrink-0">
                                     <div>
                                         <h4>
                                             <a href="#">{{ $recent->product_name_en }}</a>

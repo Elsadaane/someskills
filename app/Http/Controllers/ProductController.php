@@ -16,8 +16,9 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $categories = Category_Product::all();
         $products = Product::with('category')->get();
-        return view('backend.pages.Product.index', compact('products'));
+        return view('backend.pages.Product.index', compact('products' , 'categories'));
     }
 
     /**
@@ -70,9 +71,9 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::findOrFail($request->id);
         $prodeced = $request->except('image');
 
         if ($request->hasFile('image')) {
@@ -96,9 +97,9 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::findOrFail($request->id);
         $product->delete();
         toastr()->success('Product Catogry Deleted Successfully');
         return redirect()->route('Product.index');

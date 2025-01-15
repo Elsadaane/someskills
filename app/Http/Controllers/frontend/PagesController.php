@@ -43,12 +43,12 @@ class PagesController extends Controller
     public function allPostsBelongCategory($slug) {
         $category = Posts_category::where('slug_category', $slug)->firstOrFail();
 
-        $posts = Post::where('posts_category_id', $category->id)->get();
+        $posts = Post::with('PostsCategory')->where('posts_category_id', $category->id)->paginate(5);
 
         return view('frontend.pages.allPostsBelongCategory', compact('posts'));
     }
     public function posts(){
-        $posts = Post::paginate(5);
+        $posts = Post::with('writer')->paginate(5);
         $categories = Category_Product::get();
         $recentPosts =Category_Product::orderBy('id' , 'asc');
         return view('frontend.pages.allPosts' , compact('posts' , 'categories' , 'recentPosts'));

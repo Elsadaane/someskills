@@ -51,8 +51,9 @@
                                                     </li>
                                                     <li class="d-flex align-items-center">
                                                         <i class="bi bi-folder"></i>
-                                                        <a href="{{ route('category-details', $post->category->slug) }}">
-                                                            {{ app()->getLocale() == 'ar' ? $post->category->name_category_ar : $post->category->name_category_en }}
+                                                        <a
+                                                            href="{{ route('category-details', $post->PostsCategory->slug_category) }}">
+                                                            {{ app()->getLocale() == 'ar' ? $post->PostsCategory->name_category_ar : $post->PostsCategory->name_category_en }}
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -112,18 +113,18 @@
                         <div class="categories-widget widget-item">
                             <h3 class="widget-title">{{ __('front.Categories') }}</h3>
                             <ul class="mt-3">
-                                @foreach ($categories as $category)
-                                    <li><a href="{{ route('category.posts', $category->slug) }}">
+                                {{-- @foreach ($posts->PostsCategory as $category)
+                                    <li><a href="{{ route('category.posts', $category->slug_category) }}">
                                             {{ app()->getLocale() == 'ar' ? $category->name_category_ar : $category->name_category_en }}
                                             <span>({{ $category->posts_count }})</span></a></li>
-                                @endforeach
+                                @endforeach --}}
                             </ul>
                         </div><!-- /Categories Widget -->
 
                         <!-- Recent Posts Widget -->
                         <div class="recent-posts-widget widget-item">
                             <h3 class="widget-title">{{ __('front.RecentPosts') }}</h3>
-                            @foreach ($recentPosts as $recent)
+                            {{-- @foreach ($recentPosts as $recent)
                                 <div class="post-item">
                                     <img src="{{ asset($recent->image) }}" alt="" class="flex-shrink-0">
                                     <div>
@@ -133,7 +134,7 @@
                                             datetime="{{ $recent->created_at }}">{{ $recent->created_at->format('M d, Y') }}</time>
                                     </div>
                                 </div><!-- End recent post item -->
-                            @endforeach
+                            @endforeach --}}
                         </div><!-- /Recent Posts Widget -->
 
                     </div>

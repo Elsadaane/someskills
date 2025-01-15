@@ -69,9 +69,9 @@ public function store(Request $request)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $Product = Category_Product::findOrFail($id);
+        $Product = Category_Product::findOrFail($request->id);
 
         $data = $request->except('image');
     if($request->hasFile('image')){
@@ -95,9 +95,9 @@ public function store(Request $request)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $product = Category_Product::findOrFail($id);
+        $product = Category_Product::findOrFail($request->id);
         $product->delete();
         toastr()->deleted('Category Deleted Successfully');
         return redirect()->route('CategoryOfProduct.index');

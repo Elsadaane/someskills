@@ -6,6 +6,7 @@ use App\Models\Category_Product;
 use App\Models\Post;
 use App\Models\Posts_category;
 use App\Models\Product;
+use App\Models\writer;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -19,6 +20,7 @@ class DashboardController extends Controller
         $post_delete = Post::onlyTrashed()->count();
         $posts_category_delete = Posts_category::onlyTrashed()->count();
         $Product_delete = Product::onlyTrashed()->count();
-        return view('dashboard' , compact('category' , 'post' , 'posts_category' ,'Product' ,'category_delete' ,'post_delete', 'posts_category_delete', 'Product_delete'));
+        $post_writer = writer::with('posts_writer')->get();
+        return view('dashboard' , compact('category' , 'post' , 'posts_category' ,'Product' ,'category_delete' ,'post_delete', 'posts_category_delete', 'Product_delete', 'post_writer'));
     }
 }

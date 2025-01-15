@@ -35,6 +35,24 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="form-group col-md-2">
+                                <label for="status">{{ __('back.Status') }}</label>
+                                <select class="form-control @error('status') is-invalid @enderror" name="status">
+                                    <option value="1"
+                                        @if ($product->status == '1') @selected(true) @endif>
+                                        {{ __('back.active') }}
+                                    </option>
+                                    <option value="0"
+                                        @if ($product->status == '0') @selected(true) @endif>
+                                        {{ __('back.inactive') }}
+                                    </option>
+                                </select>
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
 
                             <!-- Title in Arabic -->
                             <div class="form-group col-md-6">

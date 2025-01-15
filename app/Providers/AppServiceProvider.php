@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\About;
 use App\Models\Contact_Us;
+use App\Models\Setting;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -30,5 +32,14 @@ class AppServiceProvider extends ServiceProvider
             $ContactUS = Contact_Us::first();
             $view->with('footerData', $ContactUS);
         });
+        View::composer('backend.layouts.header' , function($view){
+            $setting = Setting::first();
+            $view->with('setting', $setting);
+        });
+        View::composer('frontend.layouts.header' , function($view){
+            $setting = Setting::first();
+            $view->with('setting', $setting);
+        });
+
     }
 }

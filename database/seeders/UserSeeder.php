@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::truncate();
+        // User::truncate();
         $user = User::create([
             'name' => 'admin',
             'email' => 'abdoelsadaane@gmail.com',

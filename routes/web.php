@@ -19,6 +19,7 @@ use App\Http\Controllers\frontend\PagesController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WriterController;
 
 /////////////////////back/////////////////////////////////////////
 Route::group(
@@ -65,6 +66,8 @@ Route::group(
         Route::resource('/Product' , ProductController::class);
         Route::resource('/ProductCategoryArchives'  , Product_catogryArshefController::class);
         Route::resource('/hero' , HeroController::class );
+        Route::get('add-tag' , [PostController::class , 'hashtag'])->name('tag.add');
+        Route::post('add-tag' , [PostController::class , 'add_hashtag'])->name('add-hashtag');
 
     }
 
@@ -109,5 +112,47 @@ Route::redirect('/register', '/login');
 // slug
 // small name rout -------
 
-// تضمين توجيهات المصادقة
+
+//////=/=================================================///////////////////////////////////////
+Route::prefix('writer')->group(function () {
+    //=================login//=======================================
+
+    Route::get('/login-write-page', [WriterController::class, 'login'])->name('writer-login-page');
+    Route::post('login-writer', [WriterController::class, 'write_login'])->name('writer-login');
+
+    ////////////////==============register========================//////////////////////////
+
+    Route::get('register', [WriterController::class, 'register'])->name('writer-register-page');
+    Route::post('register-writer', [WriterController::class, 'create_writer'])->name('writer-register');
+
+    ///////////////////============================//////////////////////////////////
+});
+// middleware('writer')->
+
+////////===========================================================///////////////
+Route::prefix('writer')->middleware('writer')->group(function () {
+    Route::post('logout', [WriterController::class, 'logout'])->name('writer-logout');
+    Route::get('/edit/{id}', [WriterController::class, 'edit_post'])->name('writer-edit_post');
+    Route::put('/post-update/{id}', [WriterController::class, 'update_post'])->name('writer-post-update');
+    Route::resource('writer' , WriterController::class);
+    Route::get('writer-post-detals/{id}' , [WriterController::class , 'posts_writer_detils'])->name('posts_writer_detils');
+    Route::get('/writer-posts-profile/{id}' , [WriterController::class , 'WriterPosts'])->name('WriterPosts.profile');
+
+});
+
+
+
+
+
+/// ليه مشتغلتش لما عملتهالا ذي ال auth
+// notafication
+// how can i make gust
+
+
+
+
+
+
+
+
 require __DIR__ . '/auth.php';

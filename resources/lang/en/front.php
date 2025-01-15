@@ -9,6 +9,10 @@ return [
     'allCategory' =>'allCategory',
     'AllPosts'=>'AllPosts',
     'AllCategory'=>'AllCategory',
+    'Search'=>'Search',
+    'RecentPosts'=>'RecentPosts',
+    'Categories'=>'Categories',
+    'Writer_Sign_In'=>'Writer Sign In'
 
 
 

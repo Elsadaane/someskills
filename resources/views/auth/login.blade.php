@@ -70,19 +70,24 @@
                             </form>
 
                         </div> <!-- end card-body -->
-                    </div> <!-- end card -->
-
-                    {{-- <div class="row mt-3">
-                        <div class="col-12 text-center">
-                            <p class="text-muted">Don't have an account? <a href="{{ route('register') }}"
-                                    class="text-dark ms-1"><b>Sign Up</b></a></p>
-                        </div> <!-- end col -->
-                    </div> <!-- end row --> --}}
+                        <div class="text-center">
+                            <p class="text-muted">
+                                Are you a writer?
+                                <a href="{{ route('writer-login-page') }}" class="text-primary ms-1"><b>Sign Up as a
+                                        Writer</b></a>
+                                or
+                                <a href="{{ route('writer-register-page') }}" class="text-primary ms-1"><b>Log In as a
+                                        Writer</b></a>
+                            </p>
+                        </div><!-- end card -->
+                    </div>
 
                 </div> <!-- end col -->
             </div> <!-- end row -->
 
-        </div> <!-- end container -->
+        </div>
+
+        <!-- end container -->
     </div>
 
 </body>

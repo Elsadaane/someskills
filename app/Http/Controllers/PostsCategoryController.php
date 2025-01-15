@@ -76,7 +76,7 @@ class PostsCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         // تحقق من صحة البيانات
         $request->validate([
@@ -88,7 +88,7 @@ class PostsCategoryController extends Controller
         ]);
 
         // جلب السجل المطلوب تحديثه
-        $category = Posts_category::findOrFail($id);
+        $category = Posts_category::findOrFail($request->id);
 
         $data = [];
 
@@ -126,9 +126,9 @@ class PostsCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Posts_category $catogry , $id)
+    public function destroy(Request $request)
     {
-        Posts_category::findOrFail($id)->delete();
+        Posts_category::findOrFail($request->id)->delete();
         toastr()->error('category deleted successfully');
         return redirect()->route('category.index')->with('success', 'category deleted successfully');
     }

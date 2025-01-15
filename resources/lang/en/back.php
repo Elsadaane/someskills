@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'hero' =>'hero',
 
     'catogry'=>'Catogrys',
     'allPostsBelong'=>'All Posts Belong',

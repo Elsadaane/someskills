@@ -16,4 +16,11 @@ class Post extends Model
     {
         return $this->belongsTo(Posts_category::class, 'posts_category_id');
     }
+    public function writer(){
+        return $this->belongsTo(writer::class , 'writer_id');
+    }
+    public function tags(){
+        return $this->belongsToMany(Tag::class , 'post_tag');
+    }
+
 }

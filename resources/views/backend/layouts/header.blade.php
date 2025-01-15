@@ -122,18 +122,18 @@
         <div class="logo-box">
             <a href="index.html" class="logo logo-light text-center">
                 <span class="logo-sm">
-                    <img src="{{ asset('logo.png') }}" alt="" height="22">
+                    <img src="{{ asset($setting->logo) }}" alt="" height="22">
                 </span>
                 <span class="logo-lg">
-                    <img src="{{ asset('logo.png') }}" alt="" height="16">
+                    <img src="{{ asset($setting->logo) }}" alt="" height="16">
                 </span>
             </a>
             <a href="index.html" class="logo logo-dark text-center">
                 <span class="logo-sm">
-                    <img src="{{ asset('logo.png') }}" alt="" width="50" height="50">
+                    <img src="{{ asset($setting->logo) }}" alt="" width="50" height="50">
                 </span>
                 <span class="logo-lg">
-                    <img src="{{ asset('logo.png') }}" alt="" width="50" height="50">
+                    <img src="{{ asset($setting->logo) }}" alt="" width="50" height="50">
                 </span>
             </a>
         </div>

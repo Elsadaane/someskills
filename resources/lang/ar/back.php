@@ -61,6 +61,7 @@ return [
     'category_product' => 'أقسام المنتجات',
     'who_are_we' =>'من نحن',
     'Contact_whatsapp'=>'انتقل الي الواتس',
+    'hero' => 'المقدمة',
 
 
 

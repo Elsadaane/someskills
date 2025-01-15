@@ -47,7 +47,7 @@
                                         {{ __('back.inactive') }}
                                     </option>
                                 </select>
-                                @error('catogry_product_id')
+                                @error('status')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

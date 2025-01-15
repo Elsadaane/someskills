@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
 use App\Models\Posts_category;
-use App\Models\PostsCatogry;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use PhpParser\Node\Stmt\Foreach_;
 
 class PostController extends Controller
 {
@@ -17,8 +17,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $productes = Post::with('PostsCategory')->get();
-        return view('backend.pages.posts.index', compact('productes'));
+        $productes = Post::with('PostsCategory' , 'writer' , 'tags')->get();
+        $categories = Posts_category::all();
+        $tags = Tag::all();
+
+        return view('backend.pages.posts.index', compact('productes' , 'categories' , 'tags'));
     }
 
     /**
@@ -27,7 +30,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Posts_category::all();
-        return view('backend.pages.posts.create' , compact('categories'));
+        $tags = Tag::all();
+        return view('backend.pages.posts.create' , compact('categories', 'tags'));
     }
 
     /**
@@ -35,7 +39,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // التحقق من صحة البيانات المدخلة
         $request->validate([
             'posts_category_id' => 'required|exists:posts_categories,id',
             'title_ar' => 'required|string|max:255',
@@ -44,8 +47,7 @@ class PostController extends Controller
             'content_en' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
         ]);
-        $data = $request->except('image');
-        // رفع الصورة إذا كانت موجودة
+        $data = $request->except('image' , 'tags');
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = uniqid() . $image->getClientOriginalName();
@@ -56,11 +58,25 @@ class PostController extends Controller
             $imagePath = null;
         }
 
-        // إنشاء البوست الجديد
         $data['slug'] = Str::slug($data['title_en'] , '-');
-        Post::create($data);
+        $data['user_type']=  "admin";
+        if (Auth::user()) {
+            $data['user_id'] = Auth::user()->id;
+        } elseif (Auth::guard('writer')->user()) {
+            $data['writer_id'] = Auth::guard('writer')->user()->id;
+        }
+       $post =  Post::create($data);
 
-        // إعادة التوجيه بعد الحفظ
+        //     if ($request->has('tags')) {
+        //         $tags = collect($request->tags)->map(function ($tag) {
+        //     return Tag::firstOrCreate(['name' => $tag])->id;
+        // });
+        // $post->tags()->sync($tags);
+        if ($request->has('tags')) {
+            $post->tags()->sync($request->tags);
+        }
+
+
         toastr()->success('posts success successfully');
         return redirect()->route('posts.index')->with('success', __('back.category_created_successfully'));
     }
@@ -88,10 +104,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $posts = Post::findOrFail($id);
-        // التحقق من صحة البيانات المدخلة
+        $posts = Post::findOrFail($request->id);
         $request->validate([
             'posts_category_id' => 'required|exists:posts_categories,id',
             'title_ar' => 'required|string|max:255',
@@ -101,8 +116,8 @@ class PostController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
         ]);
 
-        $data = $request->except('image');
-        // رفع الصورة إذا كانت موجودة
+        $data = $request->except('image' , 'tags');
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = uniqid() . $image->getClientOriginalName();
@@ -113,22 +128,56 @@ class PostController extends Controller
             $imagePath = null;
         }
         // dd($data);
-        // إنشاء البوست الجديد
         $data['slug'] = Str::slug($data['title_en']);
-
+        if (Auth::user()) {
+            $data['user_id'] = Auth::user()->id;
+        } elseif (Auth::guard('writer')->user()) {
+            $data['writer_id'] = Auth::guard('writer')->user()->id;
+        }
         $posts->update($data);
+        // if ($request->has('tags')) {
+        //     $tags = collect($request->tags)->map(function ($tag) {
+        //         return Tag::firstOrCreate(['name' => $tag])->id;
+        //     });
+        //     $posts->tags()->sync($tags);
+        // }
+        if ($request->has('tags')) {
+            $posts->tags()->sync($request->tags);
+        }
 
-        // إعادة التوجيه بعد الحفظ
+
         toastr()->success('posts update successfully');
         return redirect()->route('posts.index')->with('success', __('back.category_update'));
     }
 
+
+    public function hashtag(){
+        return view('backend.pages.hashtag');
+    }
+
+    public function add_hashtag(Request $request){
+        $List_Classes = $request->List_Classes;
+        foreach($List_Classes as $List_Class){
+            $hash  = new Tag();
+            $name = $List_Class['name'];
+            $hash->name = '#' . Str::replace(' ', '_', trim($name));
+            $hash->save();
+        }
+
+
+
+            return redirect()->back();
+    }
+
+
+
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $posts = Post::findOrFail($id);
+        $posts = Post::findOrFail($request->id);
         $posts->delete();
         toastr()->error('posts deleted successfully');
         return redirect()->route('posts.index')->with('success', 'posts deleted successfully');
